@@ -1,8 +1,11 @@
 import React from 'react'
 
 const Project = () => {
+  // Pass props groupInfo
   return (
-    <div>Project</div>
+    <div>
+      
+    </div>
   )
 }
 

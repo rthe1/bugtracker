@@ -25,7 +25,7 @@ useEffect(() => {
   if(user != null){
     navigate('/dashboard');
   }
-}, [])
+}, [user])
 
 
 
