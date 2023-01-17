@@ -1,20 +1,33 @@
 import { group } from 'console';
-import React from 'react';
-// import the user from the db
-// connect firebase db
-
+import React, { useState, useEffect } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const Group = () => {
+  const [groupInfo, setGroupInfo] = useState([]);
 
-  // Select All from db  = GroupInfo
+  useEffect(() => {
+    const db = firebase.firestore();
+    const user = firebase.auth().currentUser;
+    db.collection('groups')
+      .where('userId', '==', user.uid)
+      .get()
+      .then((querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => doc.data());
+        setGroupInfo(data);
+      });
+  }, []);
 
   return (
     <div>
-      {/* db query the group WHERE ID = user id */}
-      {/* group name */}
-      {/* <PRoject groupInfo */}
+      {groupInfo.map((group) => (
+        <div key={group.id}>
+          <h2>{group.name}</h2>
+          <Project groupInfo={group} />
+        </div>
+      ))}
     </div>
   )
 }
 
-export default Group
+export default Group;
